@@ -14,4 +14,6 @@ class Comment:
     def new_comment(cls, data):
         query = 'INSERT INTO comments (comment, user_id, post_id) VALUES (%(comment)s, %(user_id)s, %(post_id)s)'
         connectToMySQL(Comment.db).query_db(query, data)
-    
+        
+   
+   

@@ -88,7 +88,7 @@
                             <img alt="profile picture" src="/static/images/{{post.user.prifile_pic}}" class="rounded-circle mx-4" height="80" width="80">
                         </a>
                         <a href="/profile/{{post.user.id}}">{{post.user.firstname}} {{post.user.lastname}}</a>
-                        <small class="text-muted">{{post.created_at}}</small>
+                        <small class="text-muted mx-4">{{ post.time_span() }}</small>
                     </div>
                     {% if session['user_id'] == post.user.id %}
                     <div class="dropdown drop-end">
@@ -120,7 +120,7 @@
                     {%if post.comments%}
                     {%for comment in post.comments%}
                         <div>
-                            <p>commet : {{comment.comment}}</p>
+                            <p>comment : {{comment.comment}}</p>
                         </div>
                         {% endfor %}
                     {% endif %}
