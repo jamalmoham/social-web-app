@@ -7,6 +7,15 @@
         <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <title>Friendsy: Profile</title>
+<style>
+    /* :root {
+        filter: invert(100%);
+    } */
+
+    /* :root{
+        filter: invert(1) hue-rotate(180deg);
+    } */
+</style>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark shadow p-3 mb-5 bg-body">
@@ -37,7 +46,7 @@
                 <div class="col-lg-4">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body text-center">
-                        <img src="/static/images/{{ profile.prifile_pic }}" alt="avatar" class="rounded-circle" height="200" width="200">
+                        <img src="/static/images/{{ profile.profile_pic }}" alt="avatar" class="rounded-circle" height="200" width="200">
                         <h5 class="my-3">{{profile.firstname}} {{profile.lastname}}</h5>
                         <p class="text-muted mb-1">{{profile.occupation}}</p>
                         <p class="text-muted mb-4">{{profile.address.city}}, {{profile.address.state}}</p>
@@ -61,7 +70,7 @@
                             <h5 class="mb-0">Connection Requests</h5>
                         </div>
                         <div class="col-sm-3">
-                            <!-- <p class="text-muted mb-0">(0)</p> -->
+                            <p class="text-muted mb-0">({{requests|length}})</p>
                         </div>
                     </div>
                     <hr>
@@ -71,7 +80,7 @@
                                 {% for request in requests %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                     <a href="/profile/{{request.id}}">
-                                        <img src="/static/images/{{ request.prifile_pic }}" alt="avatar"
+                                        <img src="/static/images/{{ request.profile_pic }}" alt="avatar"
                                         class="rounded-circle img-fluid" style="width: 75px;">
                                     </a>
                                     <p class="mb-0">
@@ -159,7 +168,7 @@
                                 <div class="">
                                     <div class="social-avatar d-flex align-items-center">
                                         <a href="/profile/{{post.user.id}}">
-                                            <img alt="profile picture" src="/static/images/{{post.user.prifile_pic}}" class="rounded-circle" height="80" width="80">
+                                            <img alt="profile picture" src="/static/images/{{post.user.profile_pic}}" class="rounded-circle" height="80" width="80">
                                         </a>
                                         <div class="social-avatar px-5">
                                             <a href="/profile/{{post.user.id}}">{{post.user.firstname}} {{post.user.lastname}}</a>
@@ -201,20 +210,20 @@
                         <div class="card mb-4 mb-md-0 shadow-sm">
                             <div class="card-body">
                                 <h5 class="mb-4">
-                                    Friends
+                                    Friends ({{friends|length}})
                                 </h5>
                                 {% if friends%}
                                 {% for friend in friends %}
-                                <div class="">
+                                <div class="d-flex align-items-center">
                                     <a href="/profile/{{friend.id}}">
-                                        <img src="/static/images/{{ friend.prifile_pic }}" alt="avatar"
+                                        <img src="/static/images/{{ friend.profile_pic }}" alt="avatar"
                                         class="rounded-circle img-fluid" style="width: 75px;">
                                     </a>
-                                    <p class="mb-0">
+                                    <p class="mb-0 mx-4">
                                         {{friend.firstname}} {{friend.lastname}}
                                     </p>
                                     {% if not session['user_id'] == friend.id%}
-                                    <span class="">
+                                    <span class="mx-4">
                                         <a href="/remove/{{friend.id}}" class="btn btn-warning btn-sm ">Unfriend</a>
                                     </span>
                                     {%endif%}

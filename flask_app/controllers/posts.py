@@ -63,3 +63,38 @@ def like(id):
     else:
         post.Post.unlike(data)
     return redirect('/home')
+
+@app.route('/delete/post/<int:id>')
+def delete_post(id):
+    data ={
+        'user_id' : session['user_id'],
+        'id' : id
+    }
+    post.Post.delete_post(data)
+    return redirect('/home')
+
+@app.route('/edit/post/<int:id>')
+def edit_post(id):
+    data ={
+        'id' : id
+    }
+    my_post = post.Post.users_post(data)
+    return render_template('edit_post.html', my_post = my_post)
+
+@app.route('/update/post/<int:id>', methods = ['POST'])
+def update_post(id):
+    file = request.files['file']
+    filename = secure_filename(file.filename)
+    if request.method == 'POST':
+        if file and allowed_file(file.filename):
+            filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print('saved')
+    data = {
+        'content': request.form['content'],
+        'file' : filename,
+        'id' : id
+    }
+    if request.form['content'] or file:
+        post.Post.update_post(data)
+    return redirect(f'/edit/post/{id}')

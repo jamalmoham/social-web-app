@@ -16,7 +16,7 @@ class User:
         self.phone = data['phone']
         self.occupation = data['occupation']
         self.education = data['education']
-        self.prifile_pic = data['profile_pic']
+        self.profile_pic = data['profile_pic']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.address = None

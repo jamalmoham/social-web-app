@@ -85,7 +85,7 @@
                 <div class="social-avatar d-flex justify-content-between align-items-center">
                     <div class="social-avatar ">
                         <a href="/profile/{{post.user.id}}">
-                            <img alt="profile picture" src="/static/images/{{post.user.prifile_pic}}" class="rounded-circle mx-4" height="80" width="80">
+                            <img alt="profile picture" src="/static/images/{{post.user.profile_pic}}" class="rounded-circle mx-4" height="80" width="80">
                         </a>
                         <a href="/profile/{{post.user.id}}">{{post.user.firstname}} {{post.user.lastname}}</a>
                         <small class="text-muted mx-4">{{ post.time_span() }}</small>
@@ -95,9 +95,9 @@
                         <img class="btn dropdown-toggle" src="/static/utilities/menu.png" height="50px" data-toggle="dropdown">
                             
                         <ul class="dropdown-menu">
-                            <a class="dropdown-item" href="#">This dropdown</a>
-                            <a class="dropdown-item" href="#">Uses</a>
-                            <a class="dropdown-item" href="#">Links</a>
+                            <a class="dropdown-item" href="/edit/post/{{post.id}}">Edit post</a>
+                            <a class="dropdown-item text-danger" href="/delete/post/{{post.id}}">Delete</a>
+                            <!-- <a class="dropdown-item" href="#">Links</a> -->
                         </ul>
                     </div>
                     {% endif %}
@@ -114,7 +114,7 @@
                     </div>
                     <div class="btn-group">
                         <a class="btn btn-white btn-xs" href="/like/{{post.id}}">{{post.likes}}  Like this!</a>
-                        <a class="btn btn-white" href="">{{ post.num_comments }} Comments</a>
+                        <a class="btn btn-white" href="#demo" class="btn btn-primary" data-toggle="collapse">{{ post.num_comments }} Comments</a>
                         <button class="btn btn-white btn-xs">Share</button>
                     </div>
                     {%if post.comments%}
@@ -124,6 +124,13 @@
                         </div>
                         {% endfor %}
                     {% endif %}
+                    <div class="container mt-3">
+                        <div id="demo" class="collapse">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </div>
+                    </div>
                     
                     <div id="comment" class="">
                         <form action="comment/{{ post.id }}" method="post">

@@ -1,3 +1,4 @@
+from unittest import result
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import user, comment
 from datetime import datetime
@@ -36,6 +37,34 @@ class Post:
         connectToMySQL(Post.db).query_db(query, data)
 
     @classmethod
+    def users_post(cls, data):
+        query = 'SELECT * FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = %(id)s'
+        results = connectToMySQL(Post.db).query_db(query, data)
+        print(results)
+        post_instance = cls(results[0])
+        data = {
+                'id' : results[0]['users.id'],
+                'firstname' : results[0]['firstname'],
+                'lastname' : results[0]['lastname'],
+                'email' : results[0]['email'],
+                'password' : results[0]['password'],
+                'phone' : results[0]['phone'],
+                'occupation': results[0]['occupation'],
+                'education' : results[0]['education'],
+                'profile_pic' : results[0]['profile_pic'],
+                'created_at': results[0]['users.created_at'],
+                'updated_at' : results[0]['users.updated_at']
+        }
+        post_user = user.User(data)
+        post_instance.user = post_user
+        return post_instance
+
+    @classmethod
+    def update_post(cls, data):
+        query = 'UPDATE posts SET content = %(content)s, file = %(file)s where posts.id = %(id)s'
+        connectToMySQL(Post.db).query_db(query, data)
+
+    @classmethod
     def like_a_post(cls, data):
         query = 'INSERT INTO likes (user_id, post_id) VALUES (%(user_id)s, %(post_id)s);'
         result = connectToMySQL(Post.db).query_db(query, data)
@@ -56,6 +85,11 @@ class Post:
     @classmethod
     def unlike(cls, data):
         query = "DELETE FROM likes WHERE user_id = %(user_id)s AND post_id = %(id)s;"
+        connectToMySQL(Post.db).query_db(query, data)
+
+    @classmethod
+    def delete_post(cls, data):
+        query = "DELETE FROM posts WHERE user_id = %(user_id)s AND posts.id = %(id)s;"
         connectToMySQL(Post.db).query_db(query, data)
 
     @classmethod
@@ -95,7 +129,6 @@ class Post:
             the_comment = comment.Comment(dt)
             post_instance.comments.append(the_comment) 
             all_posts.append(post_instance)
-            print(post_instance.user.prifile_pic)
         return all_posts
 
     @classmethod

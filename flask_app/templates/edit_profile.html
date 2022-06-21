@@ -37,10 +37,10 @@
                     <form action="/upload/profile/pic" method="post" enctype="multipart/form-data">
                         <div class="card mb-4 shadow">
                             <div class="card-body text-center">
-                                <img name="file" src="/static/images/{{ profile.prifile_pic }}" alt="avatar"
+                                <img name="file" src="/static/images/{{ profile.profile_pic }}" alt="avatar"
                                     class="rounded-circle" width="200" height="200" >
                                 <h5 class="my-3">Upload profile photo</h5> 
-                                <input type="file" name="file">
+                                <input type="file" name="file" value="{{ profile.profile_pic }}">
                                 <div class="float-end mb-2">
                                     <button class="btn btn-primary">Upload</button>
                                 </div>
